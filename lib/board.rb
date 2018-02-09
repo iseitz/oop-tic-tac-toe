@@ -50,4 +50,38 @@ class Board
 
     return false
   end
+
+  def winner?
+    @board.each do |row|
+      row.each do |space|
+        if !space.nil?
+          if row[0] == row[1] == row[2]
+            true
+            space
+          # elsif @board[1][0] == @board[1][1] == @board[1][2]
+          #   true
+          #   space
+          # elsif @board[2][0] == @board[2][1] == @board[2][2]
+          #   true
+          #   space
+          elsif @board[0][0] == @board[1][0] == @board[2][0]
+            true
+            space
+          elsif @board[0][1] == @board[1][1] == @board[2][1]
+            true
+            space
+          elsif @board[0][2] == @board[1][2] == @board[2][2]
+            true
+            space
+          elsif @board[0][0] == @board[1][1] == @board[2][2]
+            true
+            space
+          elsif @board[0][2] == @board[1][1] == @board[2][0]
+            true
+            space
+          end
+        end
+        space
+  end
+
 end
