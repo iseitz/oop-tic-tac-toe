@@ -1,3 +1,7 @@
+require_relative 'board_space'
+require_relative 'game_turn'
+
+
 class Board
 
   def initialize (num_rows_and_columns = 3)
@@ -5,7 +9,7 @@ class Board
     num_rows_and_columns.times do
       row = []
         num_rows_and_columns.times do
-          row << nil
+          row << BoardSpace.new
         end
         @board << row
     end
@@ -20,11 +24,14 @@ class Board
     @board.each_with_index do |row, index|
       spots = []
       row.each do |space|
-        if space.nil?
-          spots << '-'
-        else
-          spots << space
-        end
+        # if space.nil?
+        #   spots << '-'
+        # else
+        #   spots << space
+        # end
+        # => this code is equivalent of the line below
+        # but using the BoardSpace class
+        spots << space.to_char
       end
       board_print << spots.join(' | ') + "\n"
 
@@ -36,13 +43,16 @@ class Board
   end
 
   def add_turn(player, row_index, col_index)
-    @board[row_index][col_index] = player
+    @last_turn = GameTurn.new(self, player, row_index, col_index)
+    @last_turn.take!
+    # @board[row_index][col_index].player = player this code is equivalent of the code above BUT without
+    # the turn class
   end
 
   def has_empty_spaces?
     @board.each do |row|
       row.each do |space|
-        if space.nil?
+        if !space.occupied?
           return true
         end
       end
@@ -52,36 +62,11 @@ class Board
   end
 
   def winner?
-    @board.each do |row|
-      row.each do |space|
-        if !space.nil?
-          if row[0] == row[1] == row[2]
-            true
-            space
-          # elsif @board[1][0] == @board[1][1] == @board[1][2]
-          #   true
-          #   space
-          # elsif @board[2][0] == @board[2][1] == @board[2][2]
-          #   true
-          #   space
-          elsif @board[0][0] == @board[1][0] == @board[2][0]
-            true
-            space
-          elsif @board[0][1] == @board[1][1] == @board[2][1]
-            true
-            space
-          elsif @board[0][2] == @board[1][2] == @board[2][2]
-            true
-            space
-          elsif @board[0][0] == @board[1][1] == @board[2][2]
-            true
-            space
-          elsif @board[0][2] == @board[1][1] == @board[2][0]
-            true
-            space
-          end
-        end
-        space
+    if @last_turn
+      @last_turn.winner?
+    else
+      false
+    end
   end
 
 end

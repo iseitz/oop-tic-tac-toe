@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative'../../lib/board'
+# require_relative'../../lib/board'
 
 describe Board do
   it 'can be initialized with 3 rows and columns by default' do
@@ -41,7 +41,8 @@ describe Board do
 
   it 'places a player on the board' do
     board = Board.new
-    board.add_turn('x', 0, 0)
+    player = Player.new('x')
+    board.add_turn(player, 0, 0)
     board_printout =
     "x | - | -\n" +
     "---------\n" +
@@ -54,7 +55,8 @@ describe Board do
 
   it 'places a player on the center of the board' do
     board = Board.new
-    board.add_turn('o', 1, 1)
+    player = Player.new('o')
+    board.add_turn(player, 1, 1)
     board_printout =
     "- | - | -\n" +
     "---------\n" +
@@ -71,9 +73,10 @@ describe Board do
 
   it 'has no empty spaces when completely occupied' do
     board = Board.new
+    player = Player.new('x')
     3.times do |index|
       3.times do |col_index|
-        board.add_turn('x', index, col_index)
+        board.add_turn(player, index, col_index)
       end
     end
 
