@@ -77,5 +77,6 @@ describe Board do
       end
     end
 
-    expect(board.has_empty_spaces?).to eq(false)
+      expect(board.has_empty_spaces?).to eq(false)
+  end
 end

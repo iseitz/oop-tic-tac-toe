@@ -42,7 +42,9 @@ class Board
   def has_empty_spaces?
     @board.each do |row|
       row.each do |space|
-        return true if space.nil?
+        if space.nil?
+          return true
+        end
       end
     end
 
